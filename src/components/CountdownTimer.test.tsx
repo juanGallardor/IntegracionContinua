@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CountdownTimer from "./CountdownTimer";
 
@@ -8,6 +8,7 @@ describe("CountdownTimer Component", () => {
   });
 
   afterEach(() => {
+    jest.runOnlyPendingTimers();
     jest.useRealTimers();
   });
 
@@ -29,22 +30,20 @@ describe("CountdownTimer Component", () => {
     fireEvent.change(input, { target: { value: "5" } });
     fireEvent.click(startButton);
     
-    await waitFor(() => {
-      expect(screen.getByTestId("timer-display").textContent).toContain("5");
-    });
+    expect(screen.getByTestId("timer-display").textContent).toContain("5");
     
-    jest.advanceTimersByTime(1000);
-    await waitFor(() => {
-      expect(screen.getByTestId("timer-display").textContent).toContain("4");
+    act(() => {
+      jest.advanceTimersByTime(1000);
     });
+    expect(screen.getByTestId("timer-display").textContent).toContain("4");
     
-    jest.advanceTimersByTime(1000);
-    await waitFor(() => {
-      expect(screen.getByTestId("timer-display").textContent).toContain("3");
+    act(() => {
+      jest.advanceTimersByTime(1000);
     });
+    expect(screen.getByTestId("timer-display").textContent).toContain("3");
   });
 
-  test("se detiene en 0", async () => {
+  test("se detiene en 0", () => {
     render(<CountdownTimer />);
     
     const input = screen.getByTestId("seconds-input");
@@ -53,14 +52,14 @@ describe("CountdownTimer Component", () => {
     fireEvent.change(input, { target: { value: "2" } });
     fireEvent.click(startButton);
     
-    jest.advanceTimersByTime(3000);
-    
-    await waitFor(() => {
-      expect(screen.getByTestId("timer-display").textContent).toContain("0");
+    act(() => {
+      jest.advanceTimersByTime(2000);
     });
+    
+    expect(screen.getByTestId("timer-display").textContent).toContain("0");
   });
 
-  test("permite reiniciar el contador", async () => {
+  test("permite reiniciar el contador", () => {
     render(<CountdownTimer />);
     
     const input = screen.getByTestId("seconds-input") as HTMLInputElement;
@@ -70,17 +69,17 @@ describe("CountdownTimer Component", () => {
     fireEvent.change(input, { target: { value: "10" } });
     fireEvent.click(startButton);
     
-    jest.advanceTimersByTime(3000);
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
     
     fireEvent.click(resetButton);
     
-    await waitFor(() => {
-      expect(screen.getByTestId("timer-display").textContent).toContain("0");
-      expect(input.value).toBe("");
-    });
+    expect(screen.getByTestId("timer-display").textContent).toContain("0");
+    expect(input.value).toBe("");
   });
 
-  test("deshabilita el input mientras el contador está activo", async () => {
+  test("deshabilita el input mientras el contador está activo", () => {
     render(<CountdownTimer />);
     
     const input = screen.getByTestId("seconds-input") as HTMLInputElement;
@@ -91,8 +90,6 @@ describe("CountdownTimer Component", () => {
     fireEvent.change(input, { target: { value: "5" } });
     fireEvent.click(startButton);
     
-    await waitFor(() => {
-      expect(input.disabled).toBe(true);
-    });
+    expect(input.disabled).toBe(true);
   });
 });
