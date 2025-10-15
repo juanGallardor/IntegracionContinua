@@ -1,6 +1,21 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaCube, FaColumns, FaMicrophone, FaShapes, FaCalculator, FaRuler, FaKey, FaMouse, FaList } from "react-icons/fa";
+import { 
+  FaHome, 
+  FaCube, 
+  FaColumns, 
+  FaMicrophone, 
+  FaShapes, 
+  FaCalculator, 
+  FaRuler, 
+  FaKey, 
+  FaMouse, 
+  FaList,
+  FaClock,
+  FaStopwatch,
+  FaPalette,
+  FaSearch
+} from "react-icons/fa";
 
 interface SidebarItem {
   label: string;
@@ -22,6 +37,11 @@ const exerciseItems: SidebarItem[] = [
   { label: "Validadador de Contraseñas", route: "/validcontrasena", icon: <FaKey /> },
   { label: "Contador de Clics con Almacenamiento", route: "/contadorclics", icon: <FaMouse /> },
   { label: "Lista de Tareas", route: "/listareas", icon: <FaList /> },
+  // ✅ NUEVOS COMPONENTES - GRUPO 4B
+  { label: "Reloj Digital", route: "/reloj-digital", icon: <FaClock /> },
+  { label: "Contador Regresivo", route: "/contador-regresivo", icon: <FaStopwatch /> },
+  { label: "Selector de Colores", route: "/selector-colores", icon: <FaPalette /> },
+  { label: "Buscador en Lista", route: "/buscador-lista", icon: <FaSearch /> },
 ];
 
 export default function Sidebar() {

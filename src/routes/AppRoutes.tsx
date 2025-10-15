@@ -14,6 +14,12 @@ import ValidContrasena from "../views/ValidContrasena";
 import ContadorClics from "../views/ContadorClics";
 import ListaTareas from "../views/ListaTareas";
 
+// ✅ NUEVOS COMPONENTES - GRUPO 4B
+import DigitalClock from "../components/DigitalClock";
+import CountdownTimer from "../components/CountdownTimer";
+import ColorPicker from "../components/ColorPicker";
+import SearchList from "../components/SearchList";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -29,6 +35,12 @@ export default function AppRoutes() {
         <Route path="validcontrasena" element={<ValidContrasena />} />
         <Route path="contadorclics" element={<ContadorClics />} />
         <Route path="listareas" element={<ListaTareas />} />
+        
+        {/* ✅ NUEVAS RUTAS - GRUPO 4B */}
+        <Route path="reloj-digital" element={<DigitalClock />} />
+        <Route path="contador-regresivo" element={<CountdownTimer />} />
+        <Route path="selector-colores" element={<ColorPicker />} />
+        <Route path="buscador-lista" element={<SearchList />} />
       </Route>
     </Routes>
   );
